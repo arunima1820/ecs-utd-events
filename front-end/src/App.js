@@ -13,6 +13,7 @@ import ResetPassword from './pages/ResetPassword';
 import OrgProfileRouter from './pages/OrgProfileRouter';
 import AdminRouter from "./pages/admin/AdminRouter";
 import UserProvider from "./providers/UserProvider";
+import OrgList from "./pages/OrgList";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/App.css';
@@ -46,6 +47,7 @@ function App() {
             <Route path="/reset-password" exact component={ResetPassword} />
             <Route path="/admin" component={AdminRouter} />
             <Route path="/email" exact component={JerryEmail} />
+            <Route path="/orgList" exact component = {OrgList} />
             <Route path="/" exact component={Home} />
             <Route component={NotFound} />
           </Switch>
