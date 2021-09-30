@@ -1,7 +1,7 @@
 import { useRouteMatch, Switch, Route } from "react-router-dom";
 import EventPage from "./EventPage";
 
-export default function EventPageRouter() {
+export default function EventPageRouter( {eventID} ) {
     let match = useRouteMatch();
     console.log("MATCH PATH: ", match.path)
     return (

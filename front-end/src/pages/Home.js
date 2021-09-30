@@ -28,6 +28,7 @@ import { AllOrgContext } from '../providers/AllOrgProvider';
 
 import { parseEventsToFullCalendarFormat } from '../components/FullCalendarUtils';
 import { usePrevious } from '../components/CustomHooks';
+import EventPageRouter from './EventPageRouter';
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm. We use this
 to randomize the order of presented organizations. 
@@ -97,7 +98,6 @@ export default function Home() {
               <div className="main-page-sidebar">
                 <div>
                   <h2 style={{ fontWeight: 600 }}>Event Information</h2>
-                  <EventInfoCard event={selectedEvent} orgs={organizations} animateCard={animateCard} setAnimateCard={setAnimateCard} />
                 </div>
               </div>
             </Col>
@@ -135,6 +135,7 @@ export default function Home() {
                   }}
                   events={filteredEvents}
                   eventClick={(info) => {
+                    window.open(window.location.href + "events/" + info.event._def.publicId );
                     if (selectedEvent == null || info.event.id !== selectedEvent.id) {
                       setAnimateCard('blob-animation')
                       info.el.style.backgroundColor = "var(--primaryshade1)";
