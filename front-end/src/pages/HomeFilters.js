@@ -8,6 +8,7 @@ import { Slider, TextField, ValueLabel } from '@material-ui/core';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 import '../styles/components.css';
 import { apiProvider } from '../providers/Provider';
+import SearchBar from '../components/SearchBar';
 
 export function sortTagsAlphabetically(tagsArr) {
     var sortedArr = tagsArr;
@@ -109,7 +110,7 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
     return (
         <Row className="home-page-filters mx-1 mt-2">
             {/* organizations filter */}
-            <Col xs={12} sm={4} className="d-flex align-items-end pl-2 pr-0">
+            {/* <Col xs={12} sm={4} className="d-flex align-items-end pl-2 pr-0">
                 <Autocomplete
                     loading={organizations.length === 0}
                     options={organizations.sort((a, b) => a.name.localeCompare(b.name))}
@@ -118,9 +119,9 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
                     onChange={(e, value, _) => setOrgFilterValue(value)}
                     clearOnEscape
                 />
-            </Col>
+            </Col> */}
             {/* tags filter */}
-            <Col className="d-flex align-items-end">
+            {/* <Col className="d-flex align-items-end">
                 <Autocomplete
                     loading={tags.length === 0}
                     options={tags}
@@ -132,6 +133,10 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
                         tag: "MuiChip-root custom-tag filter-tag",
                     }}
                 />
+            </Col> */}
+
+            <Col>
+                <SearchBar />
             </Col>
             {/* start and end time filter */}
             <Col className="align-items-end pr-0">
