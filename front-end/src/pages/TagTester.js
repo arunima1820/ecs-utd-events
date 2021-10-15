@@ -20,6 +20,12 @@ export default function TagTester() {
     const sorted = tags.sort((a, b) => a.category.toString() < b.category.toString() ? 1 : -1)
 
     function handleChange(tags) {
+        // TODO get Ids of all the tags and use those to filter
+        // Next steps are to get the list of events matching the filters 
+        // Lastly, integrate into calendar/homepage
+
+
+        // TODO figure out org filtering using this component as well
         console.log("VALUE", tags)
         var filteredOrgs = []
         for (const tag of tags) {
