@@ -26,7 +26,7 @@ export default function TagTester() {
                 name="tags"
                 options={sorted}
                 groupBy={(option) => option.category.toString()}
-                getOptionLabel={(option) => option.acronym.toString()}
+                getOptionLabel={(option) => (option.acronym.toString() || option.value.toString())}
                 //onChange={(e, value, _) => setOrgFilterValue(getOrgIds(value))}
                 loading={tags.length === 0}
                 renderInput={(params) => 
