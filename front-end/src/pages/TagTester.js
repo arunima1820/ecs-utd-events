@@ -26,24 +26,19 @@ export default function TagTester() {
 
     const sorted = tags.sort((a, b) => a.category.toString() < b.category.toString() ? 1 : -1)
 
+    // for testing purposes
     const printList = (list) => {
         <>
-        <p> LIST STARTS HERE </p>
+        <p> LIST STARTS HERE: </p>
             {list.map((item, index) => {
                 <div>
-                    <p>{item}</p>
+                    <p>{item.id.toString()}</p>
                 </div>
             })}
         </>
     }
 
     function handleChange(tags) {
-        // TODO get Ids of all the tags and use those to filter
-        // Next steps are to get the list of events matching the filters 
-        // Lastly, integrate into calendar/homepage
-
-
-        // TODO figure out org filtering using this component as well
         console.log("VALUE", tags)
         // var filteredOrgs = []
         // for (const tag of tags) {
@@ -53,7 +48,8 @@ export default function TagTester() {
         // console.log(filteredOrgs)  
         
     }
-
+    console.log("FilteredEvents", filteredEvents) // stores and displays all events for now
+    console.log("selectedEvent", selectedEvent) // empty
     return (
         <div>
         <Row className="home-page-filters mx-1 mt-2">
@@ -108,14 +104,9 @@ export default function TagTester() {
                 dayCount: 7
             }
             }}
-            events={filteredEvents}
-            eventClick={(info) => {
-            if (selectedEvent == null || info.event.id !== selectedEvent.id) {
-                info.el.style.backgroundColor = "var(--primaryshade1)";
-                info.el.style.borderColor = "var(--primaryshade1)";
-                setTimeout(() => { printList(info.event) }, 100)
-            }
-            }}
+            /* TODO figure out why events aren't showing up on calendar here */
+            events={filteredEvents} 
+            eventClick={(info) => console.log(info.event)}
         />
         </div>
         </Row>
