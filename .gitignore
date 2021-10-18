@@ -35,3 +35,4 @@ back-end/log*.txt
 back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/log*.txt
 back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/obj/Debug/netcoreapp3.1/*.cache
 backend_build/bin/Debug/netcoreapp3.1/ecsutdevents-DEV_KEY.json
+front-end/package-lock.json

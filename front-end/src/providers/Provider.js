@@ -23,4 +23,4 @@ const getSingle = async (resource, id, set) => {
 export const apiProvider = { 
     getAll,
     getSingle
-  };
+};
