@@ -16,39 +16,47 @@ import listPlugin from '@fullcalendar/list';
 export default function TagTester() {
     const [tags, setTags] = useState([])
     const orgs = useContext(AllOrgContext)
-    const [filteredEvents, setFilteredEvents] = useState([])
+    const [events, setEvents] = useState([])
     const [selectedEvent, setSelectedEvent] = useState([])
+    const [selectedTags, setSelectedTags] = useState([])
+
 
     useEffect(() => {
         apiProvider.getAll('tags', setTags)
-        apiProvider.getAll('events', setFilteredEvents)
+      //  apiProvider.getAll('events', setFilteredEvents)
+    }, [])
+
+    useEffect(() => {
+        apiProvider.getAll('events', setEvents)
     }, [])
 
     const sorted = tags.sort((a, b) => a.category.toString() < b.category.toString() ? 1 : -1)
-
-    // for testing purposes
-    const printList = (list) => {
-        <>
-        <p> LIST STARTS HERE: </p>
-            {list.map((item, index) => {
-                <div>
-                    <p>{item.id.toString()}</p>
-                </div>
-            })}
-        </>
-    }
-
+    const filteredEvents = events.forEach(event => {
+                            event.tags.forEach(et => {
+                                selectedTags.forEach(st => {
+                                    if (et === st.id.toString())
+                                        if (!filteredEvents.includes(event))
+                                        filteredEvents.push(event)
+                                })
+                            })
+                        })
+    const formatted = []
+    filteredEvents.forEach(event => {
+        formatted.push({
+            'allDay': false,
+            'end' : event.endTime,
+            'id' : event.id,
+            'start' : event.startTime,
+            'title' : event.title
+        })
+    })
+    console.log("filteredEvents: ", filteredEvents)
     function handleChange(tags) {
         console.log("VALUE", tags)
-        // var filteredOrgs = []
-        // for (const tag of tags) {
-        //     if (tag.category == 'Organization') 
-        //         filteredOrgs.push(orgs.find(org => org.uId === tag.id))
-        // }
-        // console.log(filteredOrgs)  
+        setSelectedTags(tags)
         
     }
-    console.log("FilteredEvents", filteredEvents) // stores and displays all events for now
+    console.log("form", formatted) // stores and displays all events for now
     console.log("selectedEvent", selectedEvent) // empty
     return (
         <div>
@@ -105,7 +113,7 @@ export default function TagTester() {
             }
             }}
             /* TODO figure out why events aren't showing up on calendar here */
-            events={filteredEvents} 
+            events={formatted} 
             eventClick={(info) => console.log(info.event)}
         />
         </div>
