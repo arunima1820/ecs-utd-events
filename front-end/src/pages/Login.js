@@ -100,7 +100,8 @@ export default function Login() {
                                         </Row>
                                         <Row>
                                             <Col className="mt-3">
-                                                <p className="main-text">Don't have an account yet? <a target="_blank" href="https://forms.gle/jjV72W34txZLvZuw7">Sign up!</a></p>
+                                                <p className="main-text">Don't have an account yet? </p>
+                                                <Link to="/new-org-signup" style={{ textAlign: 'center' }}>Sign Up!</Link>
                                             </Col>
                                         </Row>
                                     </Form>

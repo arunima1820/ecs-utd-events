@@ -13,6 +13,8 @@ import ResetPassword from './pages/ResetPassword';
 import OrgProfileRouter from './pages/OrgProfileRouter';
 import AdminRouter from "./pages/admin/AdminRouter";
 import UserProvider from "./providers/UserProvider";
+import NewOrgSignUp from "./pages/NewOrgSignUp";
+import NewOrgConfirmation from "./pages/NewOrgConfirmation";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/App.css';
@@ -44,7 +46,10 @@ function App() {
             <Route path="/org" component={OrgProfileRouter} />
             <Route path="/login" exact component={Login} />
             <Route path="/password-reset-email" exact component={SendPasswordResetEmail} />
+            <Route path="/new-org-signup" exact component ={NewOrgSignUp}/>
+            <Route path="/new-org-confirmation" exact component ={NewOrgConfirmation}/>
             <Route path="/reset-password" exact component={ResetPassword} />
+          
             <Route path="/admin" component={AdminRouter} />
             <Route path="/email" exact component={JerryEmail} />
             <Route path="/" exact component={Home} />
