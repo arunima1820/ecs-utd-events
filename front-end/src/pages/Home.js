@@ -94,13 +94,7 @@ export default function Home() {
         <EventInfoModal mobileModalOpen={mobileModalOpen} setMobileModalOpen={setMobileModalOpen} event={selectedEvent} orgs={organizations} />
         <Container style={{ minHeight: '100vh', paddingBottom: '10vh' }} fluid>
           <Row>
-            <Col className="d-none d-md-block">
-              <div className="main-page-sidebar">
-                <div>
-                  <h2 style={{ fontWeight: 600 }}>Event Information</h2>
-                </div>
-              </div>
-            </Col>
+
             {/* THIS CALENDAR RENDERS ON WINDOWS WITH WIDTH LARGER THAN 768px (md breakpoint)*/}
             <Col lg={9}>
               <HomeFilters setFilteredEvents={setFilteredEvents} allEvents={events} />
@@ -194,6 +188,13 @@ export default function Home() {
                     setMobileModalOpen(true);
                   }}
                 />
+              </div>
+            </Col>
+            <Col className="d-none d-md-block">
+              <div className="main-page-sidebar">
+                <div>
+                  <h2 style={{ fontWeight: 600 }}>Event Information</h2>
+                </div>
               </div>
             </Col>
           </Row>
