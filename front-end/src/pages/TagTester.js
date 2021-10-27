@@ -12,11 +12,12 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list';
+import { AllEventContext } from '../providers/EventProvider';
 
 export default function TagTester() {
     const [tags, setTags] = useState([])
     const orgs = useContext(AllOrgContext)
-    const [events, setEvents] = useState([])
+    const events = useContext(AllEventContext)
     const [selectedEvent, setSelectedEvent] = useState([])
     const [selectedTags, setSelectedTags] = useState([])
 
@@ -25,22 +26,21 @@ export default function TagTester() {
         apiProvider.getAll('tags', setTags)
     }, [])
 
-    useEffect(() => {
-        apiProvider.getAll('events', setEvents)
-    }, [])
-
     const sorted = tags.sort((a, b) => a.category.toString() < b.category.toString() ? 1 : -1)
 
     const filteredEvents = []
-    selectedTags.forEach(tag => {
-        events.forEach(event => {
-            if (event.tags.includes(tag.id))
-                filteredEvents.push(event)
+    if (selectedTags.length !== 0) {
+        selectedTags.forEach(tag => {
+            events.forEach(event => {
+                if (event.tags.includes(tag.id))
+                    filteredEvents.push(event)
+            })
         })
-    })
+    } else {
+        filteredEvents.push(events)
+    }
 
     const formatted = []
-    //events.forEach(event => {
     filteredEvents.forEach(event => {
         formatted.push({
             'allDay': false,
