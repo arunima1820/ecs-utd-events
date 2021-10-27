@@ -23,7 +23,6 @@ export default function TagTester() {
 
     useEffect(() => {
         apiProvider.getAll('tags', setTags)
-      //  apiProvider.getAll('events', setFilteredEvents)
     }, [])
 
     useEffect(() => {
@@ -31,16 +30,17 @@ export default function TagTester() {
     }, [])
 
     const sorted = tags.sort((a, b) => a.category.toString() < b.category.toString() ? 1 : -1)
-    const filteredEvents = events.forEach(event => {
-                            event.tags.forEach(et => {
-                                selectedTags.forEach(st => {
-                                    if (et === st.id.toString())
-                                        if (!filteredEvents.includes(event))
-                                        filteredEvents.push(event)
-                                })
-                            })
-                        })
+
+    const filteredEvents = []
+    selectedTags.forEach(tag => {
+        events.forEach(event => {
+            if (event.tags.includes(tag.id))
+                filteredEvents.push(event)
+        })
+    })
+
     const formatted = []
+    //events.forEach(event => {
     filteredEvents.forEach(event => {
         formatted.push({
             'allDay': false,
@@ -50,14 +50,16 @@ export default function TagTester() {
             'title' : event.title
         })
     })
-    console.log("filteredEvents: ", filteredEvents)
+    
+    console.log("form", formatted) // stores and displays all events for now
+    console.log("selectedEvent", selectedEvent) // empty
+
     function handleChange(tags) {
         console.log("VALUE", tags)
         setSelectedTags(tags)
         
     }
-    console.log("form", formatted) // stores and displays all events for now
-    console.log("selectedEvent", selectedEvent) // empty
+    
     return (
         <div>
         <Row className="home-page-filters mx-1 mt-2">
@@ -121,6 +123,3 @@ export default function TagTester() {
         </div>
     )
 }
-
-
-
