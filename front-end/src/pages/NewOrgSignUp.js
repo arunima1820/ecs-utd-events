@@ -2,6 +2,9 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
+
 import Spinner from 'react-bootstrap/esm/Spinner';
 import {
   Link
@@ -10,8 +13,9 @@ import React, { useState, useEffect, useContext } from 'react'
 import ReactTooltip from 'react-tooltip';
 export default function NewOrgSignUp(){
     return(
+        
         <html lang="en">
-    <head>
+        <head>
         <title>JavaScript Form Demo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/style.css" />
@@ -20,7 +24,11 @@ export default function NewOrgSignUp(){
     <div className="background-accent">
         <div class="container">
             <form action="signup.html" method="post" id="signup">
-                <h1 className="font-weight-bold"><center>Organization Sign Up</center></h1>
+                <h1 className="font-weight-bold"><center>UTD Events Organization Sign Up Form</center></h1>
+                <p>Thanks for joining ecs-utdevents! After you submit this form our team will take a look at your information and confirm that you are an SOC-registered organization.Please enter your organization's information as it would show under SOC. 
+You will be able to edit this information in your profile later (EXCEPT for Organization Name).
+</p>
+                
                 <Card.Body className="pt-3 mx-3">
                 <div class="field"><center>
                     <label for="name">Email Address:&nbsp;&nbsp;&nbsp;</label>
@@ -43,7 +51,7 @@ export default function NewOrgSignUp(){
                     <small></small>
                     </center></div>
                 <div class="field"><center>
-                    <label for="email">Short Name:&nbsp;&nbsp;&nbsp;</label>
+                    <label for="email">Short Name(i.e. ACM, WWC):&nbsp;&nbsp;&nbsp;</label>
                     <input type="text" id="shortname" name="shortname" placeholder="Enter " />
                     <small></small>
                     </center></div>
@@ -63,7 +71,7 @@ export default function NewOrgSignUp(){
                     <small></small>
                     </center></div>
                 <div class="field"><center>
-                    <label for="email">Description:&nbsp;&nbsp;&nbsp;</label>
+                    <label for="email">Organization Description:&nbsp;&nbsp;&nbsp;</label>
                     <input type="text" id="description" name="description" placeholder="Enter " />
                     <small></small>
                     </center></div>
@@ -76,7 +84,13 @@ export default function NewOrgSignUp(){
                     </Row>
                 </Container>
                 </center></div>
+                
                 </Card.Body>
+                <Col className="d-flex align-items-center justify-content-center py-5" xs={{ order: 'first' }} md={{ order: 'last' }}>
+                            <Link to="/">
+                                <ECSLogo />
+                            </Link>
+                        </Col>
             </form>
         </div>
         </div>
