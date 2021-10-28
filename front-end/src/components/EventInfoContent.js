@@ -59,7 +59,7 @@ export default function EventInfoContent({ event, mobile, orgs }) {
         setRelevantOrgs(filteredOrgs);
     }, [event]);
 
-    var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
+    //var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
     var includedLink = event.extendedProps.link != null ? event.extendedProps.link : "";
 
     // create .ical/.ics event for downloading
@@ -79,10 +79,10 @@ export default function EventInfoContent({ event, mobile, orgs }) {
             <Card.Body className="pt-2">
                 <ListGroup className="list-group-flush text-left">
                     <ListGroupItem className="px-0">
-                        <ListItemLayout Icon={CalendarIcon}>
+                        {/* <ListItemLayout Icon={CalendarIcon}>
                             {event.start.toDateString()}<br />
                             {!event.allDay ? getFormattedTime(event.start) + " - " + getFormattedTime(event.end) : null}
-                        </ListItemLayout>
+                        </ListItemLayout> */}
                     </ListGroupItem>
                     <ListGroupItem className="px-0">
                         <ListItemLayout Icon={PlaceholderIcon}>
@@ -128,7 +128,7 @@ export default function EventInfoContent({ event, mobile, orgs }) {
             }
             <Row className="mb-0">
                 <Col className="d-flex align-items-end">
-                    <p className="text-muted my-0 mb-2 ml-0" style={{ fontSize: '.75rem' }}>Last updated {lastUpdatedStr}</p>
+                    {/* <p className="text-muted my-0 mb-2 ml-0" style={{ fontSize: '.75rem' }}>Last updated {lastUpdatedStr}</p> */}
                 </Col>
                 <Col xs={1} className="d-flex align-item-end justify-content-end">
                     <ButtonGroup>

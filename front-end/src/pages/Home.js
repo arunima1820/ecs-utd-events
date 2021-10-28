@@ -28,6 +28,7 @@ import { AllOrgContext } from '../providers/AllOrgProvider';
 
 import { parseEventsToFullCalendarFormat } from '../components/FullCalendarUtils';
 import { usePrevious } from '../components/CustomHooks';
+import EventPageRouter from './EventPageRouter';
 import { apiProvider } from '../providers/Provider';
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm. We use this
@@ -100,14 +101,7 @@ export default function Home() {
         <EventInfoModal mobileModalOpen={mobileModalOpen} setMobileModalOpen={setMobileModalOpen} event={selectedEvent} orgs={organizations} />
         <Container style={{ minHeight: '100vh', paddingBottom: '10vh' }} fluid>
           <Row>
-            <Col className="d-none d-md-block">
-              <div className="main-page-sidebar">
-                <div>
-                  <h2 style={{ fontWeight: 600 }}>Event Information</h2>
-                  <EventInfoCard event={selectedEvent} orgs={organizations} animateCard={animateCard} setAnimateCard={setAnimateCard} />
-                </div>
-              </div>
-            </Col>
+
             {/* THIS CALENDAR RENDERS ON WINDOWS WITH WIDTH LARGER THAN 768px (md breakpoint)*/}
             <Col lg={9}>
               <HomeFilters setFilteredEvents={setFilteredEvents} allEvents={events} />
@@ -142,6 +136,7 @@ export default function Home() {
                   }}
                   events={filteredEvents}
                   eventClick={(info) => {
+                    window.open(window.location.href + "events/" + info.event._def.publicId );
                     if (selectedEvent == null || info.event.id !== selectedEvent.id) {
                       setAnimateCard('blob-animation')
                       info.el.style.backgroundColor = "var(--primaryshade1)";
@@ -202,32 +197,21 @@ export default function Home() {
                 />
               </div>
             </Col>
+            <Col className="d-none d-md-block">
+              <div className="main-page-sidebar">
+                <div>
+                  <h2 style={{ fontWeight: 600 }}>Event Information</h2>
+                </div>
+              </div>
+            </Col>
           </Row>
         </Container>
         {/* We put a tooltip on only the ⓘ in "Organizations ⓘ" */}
-        <h1 className="font-weight-bold" style={{ display: "inline" }}>Organizations</h1>
         <h3 style={{ display: "inline", verticalAlign: "2px", color: "var(--gray3)" }}
           data-tip="Randomized ordering. See <a target=&quot _blank &quot href=https://researchonresearch.blog/2018/11/28/theres-lots-in-a-name/>here</a> for the dangers of alphabetical order."
-          className="font-weight-bold"> ⓘ</h3>
+          className="font-weight-bold">*****</h3>
         {/* backgroundColor = var(--primary4) from App.css. */}
         <ReactTooltip backgroundColor="#D8E2DC" textColor="black" clickable={true} delayHide={500} effect="solid" offset={{ top: 0 }} html={true} />
-        <Container fluid style={{ paddingLeft: "5.5vw", paddingRight: "5.5vw" }}>
-          <Row>
-            {
-              shuffleArray(organizations).map(org => {
-                return (
-                  <Col md={4} key={org.slug} className='align-items-stretch'>
-                    <Container style={{ paddingTop: 20 }}>
-                      <Link to={`org/${org.slug}`} style={{ textDecoration: 'none' }}>
-                        <OrgInfoCard orgName={org.name} orgImageUrl={org.imageUrl} />
-                      </Link>
-                    </Container>
-                  </Col>
-                );
-              })
-            }
-          </Row>
-        </Container>
       </div>
       <FooterComponent page='Home' />
     </div >

@@ -8,7 +8,7 @@ function AllOrgProvider({ children }) {
     useEffect(() => {
         fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/all')
             .then(response => response.json())
-            .then(data => setOrgs(data))
+            .then(data => {setOrgs(data); })
             .catch(error => {
                 console.error('There was an error fetching all the orgs', error);
             });
