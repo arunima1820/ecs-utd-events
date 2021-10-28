@@ -37,7 +37,7 @@ export default function TagTester() {
             })
         })
     } else {
-        filteredEvents.push(events)
+        events.forEach(event => filteredEvents.push(event))
     }
 
     const formatted = []
@@ -56,8 +56,7 @@ export default function TagTester() {
 
     function handleChange(tags) {
         console.log("VALUE", tags)
-        setSelectedTags(tags)
-        
+        setSelectedTags(tags) 
     }
     
     return (
@@ -81,7 +80,6 @@ export default function TagTester() {
                     />}
                 getOptionSelected={(option, value) => option.acronym === value.acronym}
                 limitTags={1}
-                
                 // clearOnEscape
                 multiple
             />
@@ -93,28 +91,27 @@ export default function TagTester() {
             initialView="upcomingWeek"
             plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
             headerToolbar={{
-            left: 'prev,next today',
-            center: 'title',
-            right: 'upcomingWeek,timeGridWeek,dayGridMonth'
+                left: 'prev,next today',
+                center: 'title',
+                right: 'upcomingWeek,timeGridWeek,dayGridMonth'
             }}
-            height="100%"
-            scrollTime='10:00:00'
-            listDayFormat={{
-            weekday: 'long'
+                height="100%"
+                scrollTime='10:00:00'
+                listDayFormat={{
+                weekday: 'long'
             }}
-            listDaySideFormat={{
-            month: "long",
-            day: "numeric"
+                listDaySideFormat={{
+                month: "long",
+                day: "numeric"
             }}
             views={{
             upcomingWeek: {
-                buttonText: 'upcoming',
-                type: 'list',
-                duration: { days: 7 },
-                dayCount: 7
-            }
+                    buttonText: 'upcoming',
+                    type: 'list',
+                    duration: { days: 7 },
+                    dayCount: 7
+                }
             }}
-            /* TODO figure out why events aren't showing up on calendar here */
             events={formatted} 
             eventClick={(info) => console.log(info.event)}
         />

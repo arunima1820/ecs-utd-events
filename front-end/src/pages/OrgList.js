@@ -10,8 +10,13 @@ import ReactTooltip from 'react-tooltip';
 import OrgInfoCard from '../components/OrgInfoCard'
 import NavbarComponent from '../components/NavbarComponent';
 import { AllOrgContext } from '../providers/AllOrgProvider';
+import SearchBar from '../components/SearchBar'
+import { apiProvider } from '../providers/Provider';
 
-
+/* Randomize array in-place using Durstenfeld shuffle algorithm. We use this
+to randomize the order of presented organizations. 
+See: https://researchonresearch.blog/2018/11/28/theres-lots-in-a-name/ for bias in 
+alphabetical ordering. */
 function shuffleArray(array) {
     var newArr = array;
     for (let i = newArr.length - 1; i > 0; i--) {
@@ -22,7 +27,12 @@ function shuffleArray(array) {
   }
 
 export default function OrgList() {
-    const organizations = useContext(AllOrgContext);
+    //const organizations = useContext(AllOrgContext);
+    const [organizations, setOrgs] = useState([])
+    useEffect(() => {
+        apiProvider.getAll('orgs', setOrgs)
+    },[])
+    console.log("Orgs:", organizations)
     return (
         <div className="App">
             <NavbarComponent page='Home' />
@@ -34,6 +44,13 @@ export default function OrgList() {
             {/* backgroundColor = var(--primary4) from App.css. */}
             <ReactTooltip backgroundColor="#D8E2DC" textColor="black" clickable={true} delayHide={500} effect="solid" offset={{ top: 0 }} html={true} />
             <Container fluid style={{ paddingLeft: "5.5vw", paddingRight: "5.5vw" }}>
+            <Row style={{ paddingBottom: "3.5vw", paddingTop: "3.5vw" }}>
+                <Col md={3}>
+                    </Col>
+                <Col md={6}>
+                <SearchBar />
+                </Col>
+            </Row>
             <Row>
                 {
                 shuffleArray(organizations).map(org => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
 import { auth } from '../firebase';
+import { apiProvider } from "./Provider";
 
 export const UserContext = createContext(null);
 
@@ -14,12 +15,7 @@ function UserProvider({ children }) {
 
     useEffect(() => {
         if (user) {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/' + user.uid)
-                .then(response => response.json())
-                .then(data => setOrg(data))
-                .catch(error => {
-                    console.error('There was an error fetching the Org from user uid!', error);
-                });
+            apiProvider.getSingle('orgs', user.id, setOrg)
         }
     }, [user])
 

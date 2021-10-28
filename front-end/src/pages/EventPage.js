@@ -13,6 +13,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import flyer_icon from '../assets/flyer.png';
 import OrgInfoCard from "../components/OrgInfoCard";
 import Icon from "@iconify/react";
+import { apiProvider } from "../providers/Provider";
 
 export default function EventPage(props) {
     //let match = useRouteMatch();
@@ -21,22 +22,18 @@ export default function EventPage(props) {
     const organizations = useContext(AllOrgContext);
 
     useEffect(() => {
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/' + eventID)
-            .then(response => response.json())
-            .then(data => {
-                let org_tags = [];
+        try {
+            apiProvider.getSingle('events', eventID, setEvent)
+            let org_tags = [];
                 // console.log(data);
-                data.orgs??[].forEach(tag=>{
+                event.orgs??[].forEach(tag=>{
                     organizations.forEach(org => {
                         if(org.uID == tag) org_tags.push(org.name);
-                        
                     })
                 })
-                // data.tags = org_tags;
-                setEvent(data);})
-            .catch(error => {
-                console.error('There was an error fetching event!', error);
-            });
+        } catch (error) {
+            console.error('There was an error fetching event!', error);
+        }
     }, [])
 
     return (
@@ -98,22 +95,6 @@ export default function EventPage(props) {
 
                 </div>
             </div>
-        {/* <img src={loc_logo} class="icon" alt="Logo"/>
-            <h6>Location</h6>
-        </div>
-        <div class="container">
-            <img src={time_logo} class="icon" alt="Logo"/>
-            <h6>Date and Time</h6> */}
-        {/* <EventInfoCard event={{
-            ...event, start: event.startTime, extendedProps: {
-                description:  event.description,
-                org: event.org,
-                location: event.location,
-                link: event.link,
-                tags: event.tags,
-                lastUpdated:event.lastUpdated
-            }
-        }} orgs={organizations} animateCard={null} setAnimateCard={null} /> */}
         </div>
         
     )

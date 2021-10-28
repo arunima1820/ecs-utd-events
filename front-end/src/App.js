@@ -22,6 +22,7 @@ import AllOrgProvider from "./providers/AllOrgProvider";
 import NotFound from "./pages/NotFound";
 import JerryEmail from "./pages/JerryEmail";
 import TestRouter from "./pages/TestRouter";
+import AllEventProvider from "./providers/EventProvider";
 
 
 export function ScrollToTop() {
@@ -40,6 +41,7 @@ function App() {
   return (
     <UserProvider>
       <AllOrgProvider>
+        <AllEventProvider>
         <Router>
           <ScrollToTop />
           <Switch>
@@ -56,6 +58,7 @@ function App() {
             <Route component={NotFound} />
           </Switch>
         </Router>
+        </AllEventProvider>
       </AllOrgProvider>
     </UserProvider>
   );
