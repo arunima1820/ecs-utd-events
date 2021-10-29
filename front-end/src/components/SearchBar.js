@@ -1,6 +1,3 @@
-// @author: Arunima and Afrida
-
-//@author: Arunima and Afrida
 import { useState, useEffect, useContext, useMemo } from 'react';
 import Chip from '@material-ui/core/Chip';
 import * as React from 'react';
@@ -10,7 +7,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { apiProvider } from '../providers/Provider';
 
-export default function SearchBar() {
+export default function SearchBar(props) {
+    console.log("Category", props.category)
     const [tags, setTags] = useState([])
 
     useEffect(() => {
@@ -40,7 +38,6 @@ export default function SearchBar() {
                 classes={{
                     tag: "MuiChip-root custom-tag filter-tag",
                 }}
-                
                 // clearOnEscape
                 multiple
             />

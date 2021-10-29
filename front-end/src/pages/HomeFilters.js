@@ -136,7 +136,7 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
             </Col> */}
 
             <Col>
-                <SearchBar />
+                <SearchBar category="all"/>
             </Col>
             {/* start and end time filter */}
             <Col className="align-items-end pr-0">

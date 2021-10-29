@@ -58,7 +58,7 @@ export default function EditEvents() {
     useEffect(() => {
         // GET request for all events using fetch inside useEffect React hook
         if (org != null) {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/all')
+            fetch(('http://localhost:80') + '/api/events/all')
                 .then(response => response.json())
                 .then(data => parseEventsToFullCalendarFormat(data))
                 .then(parsedEvents =>
@@ -86,7 +86,7 @@ export default function EditEvents() {
     }, [allEvents, org])
 
     useEffect(() => {
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/tags/all')
+        fetch(('http://localhost:80') + '/api/tags/all')
             .then(response => response.json())
             .then(data => sortTagsAlphabetically(data))
             .then(sortedTags => removeTagIds(sortedTags))
@@ -126,7 +126,7 @@ export default function EditEvents() {
     const deleteEvent = (id) => {
         if (id !== '') {
             auth.currentUser.getIdToken().then(idToken => {
-                fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/' + id, {
+                fetch(('http://localhost:80') + '/api/events/' + id, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': idToken
@@ -190,7 +190,7 @@ export default function EditEvents() {
 
         if (id !== '') {
             auth.currentUser.getIdToken().then(idToken => {
-                fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
+                fetch(('http://localhost:80') + '/api/events', {
                     method: 'PUT',
                     body: JSON.stringify(body),
                     headers: {
@@ -217,7 +217,7 @@ export default function EditEvents() {
         }
         else {
             auth.currentUser.getIdToken().then(idToken => {
-                fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
+                fetch(('http://localhost:80') + '/api/events', {
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {

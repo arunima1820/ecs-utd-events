@@ -57,7 +57,7 @@ export default function EditProfile() {
         auth.currentUser.getIdToken().then(idToken => {
             newOrgData["uId"] = org.uId;
             newOrgData["name"] = org.name;
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs',
+            fetch(('http://localhost:80') + '/api/orgs',
                 {
                     method: 'PUT',
                     body: JSON.stringify(newOrgData),

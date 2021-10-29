@@ -27,11 +27,7 @@ function shuffleArray(array) {
   }
 
 export default function OrgList() {
-    //const organizations = useContext(AllOrgContext);
-    const [organizations, setOrgs] = useState([])
-    useEffect(() => {
-        apiProvider.getAll('orgs', setOrgs)
-    },[])
+    const organizations = useContext(AllOrgContext);
     console.log("Orgs:", organizations)
     return (
         <div className="App">
@@ -44,11 +40,12 @@ export default function OrgList() {
             {/* backgroundColor = var(--primary4) from App.css. */}
             <ReactTooltip backgroundColor="#D8E2DC" textColor="black" clickable={true} delayHide={500} effect="solid" offset={{ top: 0 }} html={true} />
             <Container fluid style={{ paddingLeft: "5.5vw", paddingRight: "5.5vw" }}>
+            {/* Search Bar */}
             <Row style={{ paddingBottom: "3.5vw", paddingTop: "3.5vw" }}>
                 <Col md={3}>
                     </Col>
                 <Col md={6}>
-                <SearchBar />
+                <SearchBar category="Organization"/>
                 </Col>
             </Row>
             <Row>
