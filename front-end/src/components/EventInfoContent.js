@@ -20,6 +20,7 @@ import { ReactComponent as CalendarIcon } from './../assets/calendar.svg';
 import { ReactComponent as GroupIcon } from './../assets/group.svg';
 import { ReactComponent as PlaceholderIcon } from './../assets/placeholder.svg';
 import { Link } from 'react-router-dom';
+import { apiProvider } from '../providers/Provider';
 
 export function ListItemLayout({ Icon, children }) {
     return (
@@ -53,11 +54,28 @@ function getRelevantOrgs(allOrgs, event) {
 // A shared component to display event info on large and small screens
 export default function EventInfoContent({ event, mobile, orgs }) {
     const [relevantOrgs, setRelevantOrgs] = useState(null);
+    const [tags, setTags] = useState([]);
+ 
+    useEffect(() => {
+        const tagsArray = []
+        
+
+        if(event.extendedProps.tags != null ){
+        event.extendedProps.tags.forEach(tag => {
+            console.log(tags);
+            apiProvider.getSingle('tags', tag, setTags);
+            tagsArray.push(tags);
+        })
+        console.log(tagsArray);
+        setTags(tagsArray);
+        }
+    })
 
     useEffect(() => {
         const filteredOrgs = getRelevantOrgs(orgs, event);
         setRelevantOrgs(filteredOrgs);
     }, [event]);
+
 
     //var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
     var includedLink = event.extendedProps.link != null ? event.extendedProps.link : "";
@@ -94,10 +112,10 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                             {relevantOrgs != null &&
                                 relevantOrgs.map((org, index) =>
                                     <span>
-                                        <Link style={{ color: 'var(--gray2)' }} target="_blank" to={`/org/${org.slug}`}>
+                                        {/* <Link style={{ color: 'var(--gray2)' }} target="_blank" to={`/org/${org.slug}`}>
                                             <b data-tip={org.name}>{org.shortName}</b>
                                             <ReactTooltip backgroundColor="#FFD7BA" textColor="black" clickable={true} effect="solid" offset={{ top: 0 }} html={true} />
-                                        </Link>
+                                        </Link> */}
                                         {index !== relevantOrgs.length - 1 ? ', ' : ''}
                                     </span>
                                 )
@@ -122,7 +140,7 @@ export default function EventInfoContent({ event, mobile, orgs }) {
             {event.extendedProps.tags != null &&
                 <Row>
                     <Col>
-                        {event.extendedProps.tags.map((label, index) => <Tag key={index} type="accent">{label}</Tag>)}
+                        {tags.map((label, index) => <Tag key={index} type="accent">{label}</Tag>)}
                     </Col>
                 </Row>
             }
