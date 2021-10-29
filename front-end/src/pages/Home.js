@@ -136,7 +136,7 @@ export default function Home() {
                   }}
                   events={filteredEvents}
                   eventClick={(info) => {
-                    window.open(window.location.href + "events/" + info.event._def.publicId );
+                    // window.open(window.location.href + "events/" + info.event._def.publicId );
                     if (selectedEvent == null || info.event.id !== selectedEvent.id) {
                       setAnimateCard('blob-animation')
                       info.el.style.backgroundColor = "var(--primaryshade1)";
@@ -201,6 +201,7 @@ export default function Home() {
               <div className="main-page-sidebar">
                 <div>
                   <h2 style={{ fontWeight: 600 }}>Event Information</h2>
+                  <EventInfoCard event={selectedEvent} orgs={organizations} animateCard={animateCard} setAnimateCard={setAnimateCard} />
                 </div>
               </div>
             </Col>

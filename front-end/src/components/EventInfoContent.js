@@ -12,14 +12,9 @@ import { useEffect, useState } from "react";
 import ICalendarLink from "react-icalendar-link";
 import IconButton from '../components/IconButton';
 import Tag from "./Tag";
-import { getFormattedTime, lastUpdatedToString, eventCardFormatToISO } from './TimeUtils';
-import ReactTooltip from 'react-tooltip';
-
-
-import { ReactComponent as CalendarIcon } from './../assets/calendar.svg';
 import { ReactComponent as GroupIcon } from './../assets/group.svg';
 import { ReactComponent as PlaceholderIcon } from './../assets/placeholder.svg';
-import { Link } from 'react-router-dom';
+import { apiProvider } from '../providers/Provider';
 
 export function ListItemLayout({ Icon, children }) {
     return (
@@ -53,12 +48,23 @@ function getRelevantOrgs(allOrgs, event) {
 // A shared component to display event info on large and small screens
 export default function EventInfoContent({ event, mobile, orgs }) {
     const [relevantOrgs, setRelevantOrgs] = useState(null);
+    const [tags, setTags] = useState([]);
+    const [tempTag, setTemp] = useState()
+ 
+    useEffect(() => {
+        apiProvider.getAll('tags', setTags)
+        }, [])
 
     useEffect(() => {
         const filteredOrgs = getRelevantOrgs(orgs, event);
         setRelevantOrgs(filteredOrgs);
     }, [event]);
 
+    const eventTags = []
+    event.extendedProps.tags.forEach(eventTag => {
+        eventTags.push(tags.find(tag => eventTag.trim() === tag.id))
+    })
+    console.log("ET", eventTags)
     //var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
     var includedLink = event.extendedProps.link != null ? event.extendedProps.link : "";
 
@@ -94,10 +100,10 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                             {relevantOrgs != null &&
                                 relevantOrgs.map((org, index) =>
                                     <span>
-                                        <Link style={{ color: 'var(--gray2)' }} target="_blank" to={`/org/${org.slug}`}>
+                                        {/* <Link style={{ color: 'var(--gray2)' }} target="_blank" to={`/org/${org.slug}`}>
                                             <b data-tip={org.name}>{org.shortName}</b>
                                             <ReactTooltip backgroundColor="#FFD7BA" textColor="black" clickable={true} effect="solid" offset={{ top: 0 }} html={true} />
-                                        </Link>
+                                        </Link> */}
                                         {index !== relevantOrgs.length - 1 ? ', ' : ''}
                                     </span>
                                 )
@@ -119,10 +125,10 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                     </ListGroupItem>
                 </ListGroup>
             </Card.Body>
-            {event.extendedProps.tags != null &&
+            {eventTags != null &&
                 <Row>
                     <Col>
-                        {event.extendedProps.tags.map((label, index) => <Tag key={index} type="accent">{label}</Tag>)}
+                        {eventTags.map((tag, index) => <Tag key={index} type="accent">{tag.acronym.toString() ?? tag.value.toString()}</Tag>)}
                     </Col>
                 </Row>
             }
