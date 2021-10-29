@@ -12,14 +12,8 @@ import { useEffect, useState } from "react";
 import ICalendarLink from "react-icalendar-link";
 import IconButton from '../components/IconButton';
 import Tag from "./Tag";
-import { getFormattedTime, lastUpdatedToString, eventCardFormatToISO } from './TimeUtils';
-import ReactTooltip from 'react-tooltip';
-
-
-import { ReactComponent as CalendarIcon } from './../assets/calendar.svg';
 import { ReactComponent as GroupIcon } from './../assets/group.svg';
 import { ReactComponent as PlaceholderIcon } from './../assets/placeholder.svg';
-import { Link } from 'react-router-dom';
 import { apiProvider } from '../providers/Provider';
 
 export function ListItemLayout({ Icon, children }) {
@@ -55,28 +49,22 @@ function getRelevantOrgs(allOrgs, event) {
 export default function EventInfoContent({ event, mobile, orgs }) {
     const [relevantOrgs, setRelevantOrgs] = useState(null);
     const [tags, setTags] = useState([]);
+    const [tempTag, setTemp] = useState()
  
     useEffect(() => {
-        const tagsArray = []
-        
-
-        if(event.extendedProps.tags != null ){
-        event.extendedProps.tags.forEach(tag => {
-            console.log(tags);
-            apiProvider.getSingle('tags', tag, setTags);
-            tagsArray.push(tags);
-        })
-        console.log(tagsArray);
-        setTags(tagsArray);
-        }
-    })
+        apiProvider.getAll('tags', setTags)
+        }, [])
 
     useEffect(() => {
         const filteredOrgs = getRelevantOrgs(orgs, event);
         setRelevantOrgs(filteredOrgs);
     }, [event]);
 
-
+    const eventTags = []
+    event.extendedProps.tags.forEach(eventTag => {
+        eventTags.push(tags.find(tag => eventTag.trim() === tag.id))
+    })
+    console.log("ET", eventTags)
     //var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
     var includedLink = event.extendedProps.link != null ? event.extendedProps.link : "";
 
@@ -137,10 +125,10 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                     </ListGroupItem>
                 </ListGroup>
             </Card.Body>
-            {event.extendedProps.tags != null &&
+            {eventTags != null &&
                 <Row>
                     <Col>
-                        {tags.map((label, index) => <Tag key={index} type="accent">{label}</Tag>)}
+                        {eventTags.map((tag, index) => <Tag key={index} type="accent">{tag.acronym.toString() ?? tag.value.toString()}</Tag>)}
                     </Col>
                 </Row>
             }
