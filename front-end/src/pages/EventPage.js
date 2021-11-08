@@ -93,7 +93,7 @@ export default function EventPage(props) {
         //             <div><center>
         //             <Button className="info-btns" variant="contained">Get Directions</Button>&nbsp;
         //             <Button className="info-btns" variant="contained">Stream Link</Button>&nbsp;
-        //             <Button className="info-btns" variant="contained">Add to Calendar</Button>
+       //             <Button className="info-btns" variant="contained">Add to Calendar</Button>
         //             </center></div>
         //             <br></br>
         //             <h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description</h6>
@@ -106,7 +106,7 @@ export default function EventPage(props) {
 
         //         </div>
         //     </div>
-        // </div>
+        // </div> 
         <div>
         <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"/>
         <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"/>

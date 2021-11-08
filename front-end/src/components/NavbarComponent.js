@@ -3,7 +3,7 @@ import { useContext, useState, useEffect } from 'react';
 
 import { UserContext } from '../providers/UserProvider';
 
-import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
+import { ReactComponent as ECSLogo } from '../assets/new_logo.svg';
 import Image from 'react-bootstrap/Image';
 import Circle from '../assets/placeholder_org_image.svg';
 import { auth } from '../firebase';

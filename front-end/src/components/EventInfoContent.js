@@ -8,6 +8,7 @@ import ShowMoreText from 'react-show-more-text';
 import ShareIcon from '@iconify/icons-mdi/share';
 import LinkIcon from '@iconify/icons-mdi/link-variant';
 import CalButtonIcon from '@iconify-icons/radix-icons/calendar';
+import infoCircleOutlined from '@iconify/icons-ant-design/info-circle-outlined';
 import { useEffect, useState } from "react";
 import ICalendarLink from "react-icalendar-link";
 import IconButton from '../components/IconButton';
@@ -50,7 +51,7 @@ export default function EventInfoContent({ event, mobile, orgs }) {
     const [relevantOrgs, setRelevantOrgs] = useState(null);
     const [tags, setTags] = useState([]);
     const [tempTag, setTemp] = useState()
- 
+    console.log("event" + event);
     useEffect(() => {
         apiProvider.getAll('tags', setTags)
         }, [])
@@ -125,26 +126,24 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                     </ListGroupItem>
                 </ListGroup>
             </Card.Body>
-            {eventTags != null &&
+            {/* {eventTags != null &&
                 <Row>
                     <Col>
                         {eventTags.map((tag, index) => <Tag key={index} type="accent">{tag.acronym.toString() ?? tag.value.toString()}</Tag>)}
                     </Col>
                 </Row>
-            }
+            } */}
             <Row className="mb-0">
                 <Col className="d-flex align-items-end">
                     {/* <p className="text-muted my-0 mb-2 ml-0" style={{ fontSize: '.75rem' }}>Last updated {lastUpdatedStr}</p> */}
                 </Col>
-                <Col xs={1} className="d-flex align-item-end justify-content-end">
+                <Col xs={2} className="d-flex align-item-end justify-content-end">
                     <ButtonGroup>
-                        {event.extendedProps.link != null &&
-                            <IconButton className="mr-1 color-black" icon={LinkIcon} href={event.extendedProps.link} target="_blank"></IconButton>
-                        }
+                        <IconButton className= "mr-1 color-black" icon={infoCircleOutlined} href={window.location.href + "events/" + event.id}></IconButton>
+                        <IconButton className="mr-1 color-black" icon={LinkIcon} href={event.extendedProps.link} target="_blank"></IconButton>
                         <ICalendarLink event={formattedICalEvent}>
                             <IconButton className="mr-1" icon={CalButtonIcon} />
                         </ICalendarLink>
-
                         {/* <IconButton className="mr-1" icon={ShareIcon}></IconButton> */}
                     </ButtonGroup>
                 </Col>
