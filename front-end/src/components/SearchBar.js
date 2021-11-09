@@ -10,7 +10,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { apiProvider } from '../providers/Provider';
 
-export default function SearchBar() {
+export default function SearchBar({ handleChange }) {
     const [tags, setTags] = useState([])
 
     useEffect(() => {
@@ -26,13 +26,13 @@ export default function SearchBar() {
                 options={sorted}
                 groupBy={(option) => option.category.toString()}
                 getOptionLabel={(option) => option.acronym.toString()}
-                //onChange={(e, value, _) => setOrgFilterValue(getOrgIds(value))}
+                onChange={(e, value, _) => handleChange(value)}
                 loading={tags.length === 0}
-                renderInput={(params) => 
-                    <TextField 
-                        style={{}} 
-                        {...params} 
-                        margin="normal" 
+                renderInput={(params) =>
+                    <TextField
+                        style={{}}
+                        {...params}
+                        margin="normal"
                         variant="standard"
                     />}
                 getOptionSelected={(option, value) => option.acronym === value.acronym}
@@ -40,7 +40,7 @@ export default function SearchBar() {
                 classes={{
                     tag: "MuiChip-root custom-tag filter-tag",
                 }}
-                
+
                 // clearOnEscape
                 multiple
             />

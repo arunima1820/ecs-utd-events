@@ -53,7 +53,7 @@ function filterEvents(orgFilterValue, tagsFilterValue, timeFilterValue, allEvent
             if (event.extendedProps.tags == null)
                 return false
             else
-                return tagsFilterValue.some(tag => event.extendedProps.tags.includes(tag.name))
+                return tagsFilterValue.some(tag => event.extendedProps.tags.includes(tag.id))
         })
     }
     if (timeFilterValue[0] > 0) {
@@ -107,36 +107,14 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
         setFilteredEvents(filteredEvents);
     }, [committedTimeFilterValue, orgFilterValue, tagsFilterValue, allEvents])
 
+    function handleChange(tags) {
+        setTagsFilterValue(tags)
+    }
+
     return (
         <Row className="home-page-filters mx-1 mt-2">
-            {/* organizations filter */}
-            {/* <Col xs={12} sm={4} className="d-flex align-items-end pl-2 pr-0">
-                <Autocomplete
-                    loading={organizations.length === 0}
-                    options={organizations.sort((a, b) => a.name.localeCompare(b.name))}
-                    renderInput={(params) => <TextField style={{}} {...params} label="organization" margin="normal" />}
-                    getOptionLabel={(org) => org.name}
-                    onChange={(e, value, _) => setOrgFilterValue(value)}
-                    clearOnEscape
-                />
-            </Col> */}
-            {/* tags filter */}
-            {/* <Col className="d-flex align-items-end">
-                <Autocomplete
-                    loading={tags.length === 0}
-                    options={tags}
-                    renderInput={(params) => <TextField {...params} label="tags" margin="normal" />}
-                    getOptionLabel={(tag) => tag.name}
-                    multiple
-                    onChange={(e, value, _) => setTagsFilterValue(value)}
-                    classes={{
-                        tag: "MuiChip-root custom-tag filter-tag",
-                    }}
-                />
-            </Col> */}
-
             <Col>
-                <SearchBar />
+                <SearchBar handleChange={handleChange} />
             </Col>
             {/* start and end time filter */}
             <Col className="align-items-end pr-0">

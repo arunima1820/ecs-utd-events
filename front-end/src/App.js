@@ -23,6 +23,7 @@ import NotFound from "./pages/NotFound";
 import JerryEmail from "./pages/JerryEmail";
 import TestRouter from "./pages/TestRouter";
 import AllEventProvider from "./providers/EventProvider";
+import AllTagProvider from "./providers/TagProvider";
 
 
 export function ScrollToTop() {
@@ -40,26 +41,28 @@ export function ScrollToTop() {
 function App() {
   return (
     <UserProvider>
-      <AllOrgProvider>
-        <AllEventProvider>
-        <Router>
-          <ScrollToTop />
-          <Switch>
-            <Route path="/org" component={OrgProfileRouter} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/password-reset-email" exact component={SendPasswordResetEmail} />
-            <Route path="/reset-password" exact component={ResetPassword} />
-            <Route path="/admin" component={AdminRouter} />
-            <Route path="/email" exact component={JerryEmail} />
-            <Route path="/orgList" exact component = {OrgList} />
-            <Route path="/" exact component={Home} />
-            <Route path="/events" component={EventPageRouter} />
-            <Route path="/test" component={TestRouter} />
-            <Route component={NotFound} />
-          </Switch>
-        </Router>
-        </AllEventProvider>
-      </AllOrgProvider>
+      <AllTagProvider>
+        <AllOrgProvider>
+          <AllEventProvider>
+            <Router>
+              <ScrollToTop />
+              <Switch>
+                <Route path="/org" component={OrgProfileRouter} />
+                <Route path="/login" exact component={Login} />
+                <Route path="/password-reset-email" exact component={SendPasswordResetEmail} />
+                <Route path="/reset-password" exact component={ResetPassword} />
+                <Route path="/admin" component={AdminRouter} />
+                <Route path="/email" exact component={JerryEmail} />
+                <Route path="/orgList" exact component={OrgList} />
+                <Route path="/" exact component={Home} />
+                <Route path="/events" component={EventPageRouter} />
+                <Route path="/test" component={TestRouter} />
+                <Route component={NotFound} />
+              </Switch>
+            </Router>
+          </AllEventProvider>
+        </AllOrgProvider>
+      </AllTagProvider>
     </UserProvider>
   );
 }
