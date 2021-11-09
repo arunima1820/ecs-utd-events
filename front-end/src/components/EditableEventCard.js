@@ -21,6 +21,7 @@ import { UserContext } from '../providers/UserProvider';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 import DeleteEventModal from "../components/DeleteEventModal";
 import Tag from "./Tag";
+import { AllTagContext } from '../providers/TagProvider';
 
 
 export function LoadingEventCard() {
@@ -71,9 +72,10 @@ function getOrgIds(allOrgs) {
 export default function EditableEventCard({ tags, event, deleteEvent, setIsEditing, isEditing, changeCalendarView, saveEvent }) {
     const orgs = useContext(AllOrgContext);
     const currOrg = useContext(UserContext);
+    const tagsList = useContext(AllTagContext);
 
     const relevantOrgs = (event != null && event.orgs != null) ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
-    const defaultTags = event.tags != null ? event.tags : [];
+    const defaultTags = event.tags != null ? (tagsList.filter(tag => event.tags.includes(tag.id))) : [];
     const defaultCollaborators = relevantOrgs.filter(org => org.uId !== currOrg.org.uId);
 
     const { register, handleSubmit, watch, errors } = useForm();
@@ -96,7 +98,11 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
     const onSubmit = (eventInfo) => {
         // tags and orgs aren't stored directly in the form data since the AutoComplete component does not expose
         // it's ref/data to the useForm() hook API, thus we must add it in manually here
-        eventInfo["tags"] = tagsFilterValue;
+        const tagIds = []
+        tagsFilterValue.forEach(tag => {
+            tagIds.push(tag.id)
+        })
+        eventInfo["tags"] = tagIds;
         eventInfo["orgs"] = orgFilterValue;
         saveEvent(eventInfo, event.id, currOrg.org.uId, setIsLoading);
     }
@@ -235,7 +241,7 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                                     defaultValue={relevantOrgs.filter(org => org.uId !== currOrg.org.uId)}
                                                     onChange={(e, value, _) => setOrgFilterValue(getOrgIds(value))}
                                                     loading={orgs.length === 0}
-                                                    renderInput={(params) => <TextField {...params} margin="small" />}
+                                                    renderInput={(params) => <TextField {...params} margin="dense" />}
                                                     getOptionLabel={(org) => org.shortName}
                                                     getOptionSelected={(option, value) => option.uId === value.uId}
                                                     limitTags={1}
@@ -270,12 +276,12 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                                 <Autocomplete
                                                     defaultValue={defaultTags}
                                                     loading={tags.length === 0}
-                                                    options={tags}
+                                                    options={tagsList}
                                                     groupBy={(option) => option.category.toString()}
                                                     getOptionLabel={(option) => (option.acronym.toString() || option.value.toString())}
-                                                    renderInput={(params) => <TextField {...params} margin="small" />}
+                                                    renderInput={(params) => <TextField {...params} margin="dense" />}
                                                     multiple
-                                                    onChange={(e, value, _) => setTagsFilterValue(value)}
+                                                    onChange={(e, value, _) => (console.log("VALUE", value), setTagsFilterValue(value))}
                                                     getOptionDisabled={(_) => tagsFilterValue.length >= 5 ? true : false}
                                                     disableCloseOnSelect />
                                             </Form.Group>

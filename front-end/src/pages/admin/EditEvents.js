@@ -184,7 +184,6 @@ export default function EditEvents() {
             body.link = event.link;
         }
 
-
         if (id !== '') {
             auth.currentUser.getIdToken().then(idToken => {
                 fetch(('http://localhost:80') + '/api/events', {
