@@ -271,6 +271,8 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                                     defaultValue={defaultTags}
                                                     loading={tags.length === 0}
                                                     options={tags}
+                                                    groupBy={(option) => option.category.toString()}
+                                                    getOptionLabel={(option) => (option.acronym.toString() || option.value.toString())}
                                                     renderInput={(params) => <TextField {...params} margin="small" />}
                                                     multiple
                                                     onChange={(e, value, _) => setTagsFilterValue(value)}

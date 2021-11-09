@@ -14,6 +14,7 @@ import { eventCardFormatToISO, getFormattedTime, lastUpdatedToISO } from '../../
 import NonEditableEventCard from "../../components/NonEditableEventCard";
 import { sortTagsAlphabetically } from "../HomeFilters"
 import { auth } from "../../firebase";
+import { apiProvider } from "../../providers/Provider";
 
 async function sortedEventInsert(sortedEventArr, newEvent) {
     const apparentIndex = binarySearch(sortedEventArr, newEvent, 0, sortedEventArr.length);
@@ -41,8 +42,9 @@ function binarySearch(sortedArr, x, start, end) {
 function removeTagIds(allTags) {
     var tagNamesOnly = [];
     for (var i = 0; i < allTags.length; i++) {
-        tagNamesOnly.push(allTags[i].name);
+        tagNamesOnly.push((allTags[i].acronym ?? allTags[i].value));
     }
+    console.log("tag names", tagNamesOnly)
     return tagNamesOnly;
 }
 
@@ -58,7 +60,7 @@ export default function EditEvents() {
     useEffect(() => {
         // GET request for all events using fetch inside useEffect React hook
         if (org != null) {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/all')
+            fetch(('http://localhost:80') + '/api/events/all')
                 .then(response => response.json())
                 .then(data => parseEventsToFullCalendarFormat(data))
                 .then(parsedEvents =>
@@ -86,14 +88,9 @@ export default function EditEvents() {
     }, [allEvents, org])
 
     useEffect(() => {
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/tags/all')
-            .then(response => response.json())
-            .then(data => sortTagsAlphabetically(data))
-            .then(sortedTags => removeTagIds(sortedTags))
-            .then(tagNames => setAllTags(tagNames))
-            .catch(error => {
-                console.error('There was an error fetching tags!', error);
-            });
+        apiProvider.getAll('tags', setAllTags)
+        const sorted = allTags.sort((a, b) => a.category.toString() < b.category.toString() ? 1 : -1)
+        setAllTags(sorted)
     }, [])
 
     const setIsEditingHelper = newValue => {
@@ -126,7 +123,7 @@ export default function EditEvents() {
     const deleteEvent = (id) => {
         if (id !== '') {
             auth.currentUser.getIdToken().then(idToken => {
-                fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/' + id, {
+                fetch(('http://localhost:80') + '/api/events/' + id, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': idToken
@@ -190,7 +187,7 @@ export default function EditEvents() {
 
         if (id !== '') {
             auth.currentUser.getIdToken().then(idToken => {
-                fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
+                fetch(('http://localhost:80') + '/api/events', {
                     method: 'PUT',
                     body: JSON.stringify(body),
                     headers: {
@@ -217,7 +214,7 @@ export default function EditEvents() {
         }
         else {
             auth.currentUser.getIdToken().then(idToken => {
-                fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
+                fetch(('http://localhost:80') + '/api/events', {
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {

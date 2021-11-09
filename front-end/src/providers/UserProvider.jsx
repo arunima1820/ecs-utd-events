@@ -15,7 +15,8 @@ function UserProvider({ children }) {
 
     useEffect(() => {
         if (user) {
-            apiProvider.getSingle('orgs', user.id, setOrg)
+            console.log("USER data", user.uid)
+            apiProvider.getSingle('orgs', user.uid, setOrg)
         }
     }, [user])
 
