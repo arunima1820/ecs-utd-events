@@ -57,7 +57,7 @@ export default function EditProfile() {
         auth.currentUser.getIdToken().then(idToken => {
             newOrgData["uId"] = org.uId;
             newOrgData["name"] = org.name;
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs',
+            fetch(('http://localhost:80') + '/api/orgs',
                 {
                     method: 'PUT',
                     body: JSON.stringify(newOrgData),
@@ -214,7 +214,7 @@ export default function EditProfile() {
                                         <p>
                                             Your "slug" determines the URL where your org info page will be hosted. E.g. if your slug was "women-who-compute",
                                             then your org profile page would be found at /orgs/women-who-compute. It must be <b> UNIQUE </b> (you cannot share it with other organizations), <b>lowercase</b>, and the <b>only special
-                                            character it can contain are dashes: '-'</b>. For example, "women-who-compute", "wwc", "ais", "artificial-intelligence-society" are all valid slugs.
+                                                character it can contain are dashes: '-'</b>. For example, "women-who-compute", "wwc", "ais", "artificial-intelligence-society" are all valid slugs.
                                         </p>
                                     </TitleWithDescription>
                                     <Form.Control type="text"
@@ -269,9 +269,9 @@ export default function EditProfile() {
                                 <Col className="p-0">
                                     <TitleWithDescription>
                                         Description
-                                    <p>
+                                        <p>
                                             A short description of your organization. Must be <b>UNDER 600 characters (~90 words)</b>.
-                                    </p>
+                                        </p>
                                     </TitleWithDescription>
                                 </Col>
                                 <Col xs={2} className="d-flex justify-content-end align-items-end">
@@ -355,7 +355,7 @@ export default function EditProfile() {
                                         <p>
                                             Your "slug" determines the URL where your org info page will be hosted. E.g. if your slug was "women-who-compute",
                                             then your org profile page would be found at /orgs/women-who-compute. It must be <b> UNIQUE </b> (you cannot share it with other organizations), <b>lowercase</b>, and the <b>only special
-                                            character it can contain are dashes: '-'</b>. For example, "women-who-compute", "wwc", "ais", "artificial-intelligence-society" are all valid slugs.
+                                                character it can contain are dashes: '-'</b>. For example, "women-who-compute", "wwc", "ais", "artificial-intelligence-society" are all valid slugs.
                                         </p>
                                     </TitleWithDescription>
                                     <Col className="p-0">
@@ -392,9 +392,9 @@ export default function EditProfile() {
                                 <Col className="p-0">
                                     <TitleWithDescription>
                                         Description
-                                    <p>
+                                        <p>
                                             A short description of your organization. Must be <b>UNDER 600 characters (~90 words)</b>.
-                                    </p>
+                                        </p>
                                     </TitleWithDescription>
                                 </Col>
                             </Row>
