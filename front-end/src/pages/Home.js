@@ -57,14 +57,6 @@ export default function Home() {
   const prevSelectedEvent = usePrevious(selectedEvent);
 
   useEffect(() => {
-    // setIsLoadingEvents(true);
-    // // GET request for all events using fetch inside useEffect React hook
-    // apiProvider.getAll('events', setEvents)
-    // setEvents(parseEventsToFullCalendarFormat(events))
-    // setFilteredEvents(events)
-    // if (events == null)
-    //   setIsLoadingEvents(false)
-
     fetch('http://localhost:80/api/events/all')
       .then(response => response.json())
       .then(data => parseEventsToFullCalendarFormat(data))

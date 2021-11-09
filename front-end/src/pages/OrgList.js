@@ -28,7 +28,10 @@ function shuffleArray(array) {
 
 export default function OrgList() {
     const organizations = useContext(AllOrgContext);
-    //const [organizations, setOrgs] = useState([])
+
+    function handleChange(tags) {
+        console.logs("hello")
+    }
 
     return (
         <div className="App">
@@ -45,7 +48,7 @@ export default function OrgList() {
                         <Col md={3}>
                         </Col>
                         <Col md={6}>
-                            <SearchBar />
+                            <SearchBar handleChange={handleChange} />
                         </Col>
                     </Row>
                     <Row>

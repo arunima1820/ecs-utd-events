@@ -60,7 +60,7 @@ export default function OrgProfile() {
         // once we have an org then we need to fetch all the dates relevant to that org
         // note that all events have an "org" array which stores relevant orgIds
         if (thisOrg != null) {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/org=' + thisOrg.uId)
+            fetch(('http://localhost:80') + '/api/events/org=' + thisOrg.uId)
                 .then(response => response.json())
                 .then(data => setAllEvents(data))
                 .catch(error => {
