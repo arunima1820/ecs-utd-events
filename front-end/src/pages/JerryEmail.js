@@ -5,6 +5,7 @@ import { getAPIFormattedISOString, getFormattedDate } from '../components/TimeUt
 import CustomButton from "../components/CustomButton";
 import { useContext, useRef, useState } from "react";
 import { AllOrgContext } from "../providers/AllOrgProvider";
+import { AllEventContext } from "../providers/EventProvider";
 
 // Helper function to check if two DateTime objects are on the same day
 const datesAreOnSameDay = (first, second) =>
@@ -20,13 +21,14 @@ const getEventString = (curEvent, orgs) => {
     let orgString = ''
     for (let j = 0; j < curEvent.orgs.length; j += 1) {
         let curOrg = orgs.find(org => org.uId === curEvent.orgs[j]);
-        orgString += curOrg.shortName;
+        console.log("shortName", curOrg, "event", curEvent)
+        orgString += curOrg.shortName.toString();
         if (j < curEvent.orgs.length - 1) {
             orgString += ' X ';
         }
     }
     const curDate = new Date(curEvent.startTime);
-    
+
     // build the final event string
     return (curEvent.title + ' -- ' + orgString + '\n' + curDate.toLocaleTimeString() + '\t|\t'
         + curEvent.location + '\n' + curEvent.description
@@ -94,6 +96,7 @@ export default function JerryEmail() {
     const [emailString, setEmailString] = useState('');
     const orgs = useContext(AllOrgContext);
     const emailTextRef = useRef(null);
+    const eventsList = useContext(AllEventContext);
 
     const copyToClipboard = (e) => {
         if (emailTextRef == null && emailTextRef.current != null) {
@@ -103,6 +106,10 @@ export default function JerryEmail() {
             navigator.clipboard.writeText(emailString);
             console.log('successfully copied string');
         }
+    }
+
+    const getEventsList = (start, end) => {
+        eventsList.filter(event => event.startTime >= start && event.endTime <= end);
     }
 
     const generateEmail = (data, e) => {
@@ -115,7 +122,9 @@ export default function JerryEmail() {
         startDate.setHours(startDate.getHours() + timeZoneOffset);
         endDate.setHours(endDate.getHours() + timeZoneOffset);
 
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + `/api/events/date/start=${getAPIFormattedISOString(startDate)}&end=${getAPIFormattedISOString(endDate)}`)
+        const url = `/api/events/date/start=${getAPIFormattedISOString(startDate)}&end=${getAPIFormattedISOString(endDate)}`
+        console.log(url)
+        fetch(('http://localhost:80') + url)
             .then(response => response.json())
             .then(data => getEmailString(data, orgs))
             .then(string => {
