@@ -24,6 +24,8 @@ import JerryEmail from "./pages/JerryEmail";
 import TestRouter from "./pages/TestRouter";
 import AllEventProvider from "./providers/EventProvider";
 import AllTagProvider from "./providers/TagProvider";
+import NewOrgConfirmation from './pages/NewOrgConfirmation';
+import NewOrgSignUp from './pages/NewOrgSignUp';
 
 
 export function ScrollToTop() {
