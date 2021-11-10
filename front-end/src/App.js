@@ -51,6 +51,8 @@ function App() {
                 <Route path="/login" exact component={Login} />
                 <Route path="/password-reset-email" exact component={SendPasswordResetEmail} />
                 <Route path="/reset-password" exact component={ResetPassword} />
+                <Route path="/new-org-signup" exact component={NewOrgSignUp} />
+                <Route path="/new-org-confirmation" exact component={NewOrgConfirmation} />
                 <Route path="/admin" component={AdminRouter} />
                 <Route path="/email" exact component={JerryEmail} />
                 <Route path="/orgList" exact component={OrgList} />
