@@ -2,39 +2,33 @@ import { useState } from "react";
 import { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Moment from 'moment';
-
-import EventInfoContent from '../components/EventInfoContent'
 import { AllOrgContext } from '../providers/AllOrgProvider';
-import EventInfoCard from "../components/EventInfoCard";
-import { ownerDocument } from "@material-ui/core";
 import Button from '@mui/material/Button';
-import NavbarComponent from "../components/NavbarComponent";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import '../styles/index.css';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import flyer_icon from '../assets/flyer2.png';
-import OrgInfoCard from "../components/OrgInfoCard";
-import Icon from "@iconify/react";
 import { apiProvider } from "../providers/Provider";
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import { Row, Col } from "react-bootstrap";
+import Tag from "../components/Tag";
+import { parseEventsToFullCalendarFormat } from "../components/FullCalendarUtils";
+import {AllTagContext} from '../providers/TagProvider';
 
 export default function EventPage(props) {
     //let match = useRouteMatch();
     let { eventID } = useParams();
     const [event, setEvent] = useState({});
+    const tags = useContext(AllTagContext);
     const organizations = useContext(AllOrgContext);
-
+    
     useEffect(() => {
         try {
             apiProvider.getSingle('events', eventID, setEvent)
-            let org_tags = [];
-                // console.log(data);
+            let org_tags = []; 
                 event.orgs??[].forEach(tag=>{
                     organizations.forEach(org => {
                         if(org.uID == tag) org_tags.push(org.name);
@@ -44,82 +38,24 @@ export default function EventPage(props) {
             console.error('There was an error fetching event!', error);
         }
     }, [])
+    // console.log("EventPage", event);
+    // const eventTags = []
+    // console.log("Tags:", event.extendedProps.tags);
+    // event.tags.forEach(eventTag => {
+    //     eventTags.push(tags.find(tag => eventTag.trim() === tag.id))
+    // })
 
     return (
-        // <div>
-        //     <NavbarComponent page='EventPage' />
-        //     <div class="container1">
-        //         <div class="left-container1">
-        //             <center><img id="myImg" class="flyer-img zoom " src={flyer_icon} alt="event flyer" onClick={() => {
-        //                 var modal = document.getElementById("myModal");
-
-        //                 // Get the image and insert it inside the modal - use its "alt" text as a caption
-        //                 var img = document.getElementById("myImg");
-        //                 var modalImg = document.getElementById("img01");
-        //                 var captionText = document.getElementById("caption");
-        //                 img.onclick = function(){
-        //                 modal.style.display = "block";
-        //                 modalImg.src = this.src;
-        //                 captionText.innerHTML = this.alt;
-        //                 }
-
-        //                 // Get the <span> element that closes the modal
-        //                 var span = document.getElementsByClassName("close")[0];
-
-        //                 // When the user clicks on <span> (x), close the modal
-        //                 span.onclick = function() {
-        //                 modal.style.display = "none";
-        //                 }
-        //             }}/></center>
-        //             <div id="myModal" class="modal">
-        //                 <span class="close">&times;</span>
-        //                 <img class="modal-content" id="img01"/>
-        //                 <div id="caption"></div>
-        //             </div>
-        //             <br></br>
-        //                  <center><OrgInfoCard orgName={"PlaceHolder Name"} orgImageUrl={null}></OrgInfoCard></center>
-        //         </div>
-        //         <div class="right-container1">
-        //             <h1 class="event-name"> {event.title} </h1>
-        //             <div class="icon-and-txt">
-        //                 <LocationOnIcon class="icon"/>
-        //                 <h6>{event.location}</h6>
-        //             </div>
-        //             <div class="icon-and-txt">
-        //                 <AccessTimeIcon class="icon"/>
-        //                 <h6>{event.startTime}</h6>
-        //             </div>
-        //             <br/>
-        //             <div><center>
-        //             <Button className="info-btns" variant="contained">Get Directions</Button>&nbsp;
-        //             <Button className="info-btns" variant="contained">Stream Link</Button>&nbsp;
-       //             <Button className="info-btns" variant="contained">Add to Calendar</Button>
-        //             </center></div>
-        //             <br></br>
-        //             <h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description</h6>
-        //             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{event.description} </p>
-        //             <div class="event=tags">
-        //                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Button class="tag">tag 1</Button>
-        //                 <Button class="tag">tag 2</Button>
-        //                 <Button class="tag">tag 3</Button>
-        //             </div>
-
-        //         </div>
-        //     </div>
-        // </div> 
         <div>
         <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"/>
         <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"/>
-        
-        
         <section class="relative pt-16 bg-white-50"/>
             <div class="container mx-auto">
                 <div class="flex flex-wrap items-center">
                     <div class="w-10/12 md:w-6/12 lg:w-4/12 px-12 md:px-4 mr-auto ml-auto -mt-78">
                         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-pink-500">
-                            <img id="myImg" src={flyer_icon} alt="event flyer" onClick={() => {
+                            <img id="myImg" src={event.flyer} alt="event flyer" onClick={() => {
                                 var modal = document.getElementById("myModal");
-
                                 // Get the image and insert it inside the modal - use its "alt" text as a caption
                                 var img = document.getElementById("myImg");
                                 var modalImg = document.getElementById("img01");
@@ -145,9 +81,16 @@ export default function EventPage(props) {
                          </div> 
                         </div>
                         <div class="px-6 pt-4 pb-2">
-                            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
+                        {/* {eventTags != null &&
+                            <Row>
+                                <Col>
+                                    {eventTags.map((tag, index) => <Tag key={index} type="accent">{tag.acronym.toString() ?? tag.value.toString() ?? ""}</Tag>)}
+                                </Col>
+                            </Row>
+                        } */}
+                            {/* <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
                             <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-                            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+                            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span> */}
                         </div>
                     </div>
                     <div class="md:w-6/12">

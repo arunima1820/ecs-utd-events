@@ -115,7 +115,8 @@ export default function EditEvents() {
                 description: '',
                 orgs: [],
                 location: '',
-                link: ''
+                link: '',
+                flyer:''
             }
         );
     };
@@ -177,7 +178,8 @@ export default function EditEvents() {
             "startTime": eventCardFormatToISO(event.date, event.startTime),
             "title": event.title,
             "location": event.location,
-            "tags": event.tags
+            "tags": event.tags,
+            "flyer": event.flyer
         };
 
         if (event.link != null && event.link !== '') {
