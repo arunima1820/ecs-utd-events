@@ -103,8 +103,7 @@ export default function OrgPageEventCard({ event, pastEvent, orgs, loading }) {
                                         <Tag
                                             key={index}
                                             type={pastEvent ? "" : "accent"}
-                                            style={{ backgroundColor: pastEvent && 'var(--secondary3)', margin: '2px' }}
-                                        >
+                                            style={{ backgroundColor: pastEvent && 'var(--secondary3)', margin: '2px' }}>
                                             {label}
                                         </Tag>
                                     )

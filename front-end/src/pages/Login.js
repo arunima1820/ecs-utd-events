@@ -9,7 +9,7 @@ import React, { useContext, useState } from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { auth } from '../firebase';
-import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
+import { ReactComponent as ECSLogo } from '../assets/new_logo.svg';
 import './../styles/App.css';
 import FullPageLoading from '../components/FullPageLoading';
 import { UserContext } from '../providers/UserProvider';
