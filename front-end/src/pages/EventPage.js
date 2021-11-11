@@ -17,6 +17,10 @@ import { Row, Col } from "react-bootstrap";
 import Tag from "../components/Tag";
 import { parseEventsToFullCalendarFormat } from "../components/FullCalendarUtils";
 import {AllTagContext} from '../providers/TagProvider';
+import ICalendarLink from "react-icalendar-link";
+import IconButton from '../components/IconButton';
+import CalButtonIcon from '@iconify-icons/radix-icons/calendar';
+import NavbarComponent from "../components/NavbarComponent";
 
 export default function EventPage(props) {
     //let match = useRouteMatch();
@@ -24,7 +28,7 @@ export default function EventPage(props) {
     const [event, setEvent] = useState({});
     const tags = useContext(AllTagContext);
     const organizations = useContext(AllOrgContext);
-    
+
     useEffect(() => {
         try {
             apiProvider.getSingle('events', eventID, setEvent)
@@ -47,6 +51,7 @@ export default function EventPage(props) {
 
     return (
         <div>
+        <NavbarComponent page='EventPage' />
         <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"/>
         <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"/>
         <section class="relative pt-16 bg-white-50"/>
