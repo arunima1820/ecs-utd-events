@@ -17,7 +17,8 @@ import { ReactComponent as GroupIcon } from './../assets/group.svg';
 import { ReactComponent as PlaceholderIcon } from './../assets/placeholder.svg';
 import { apiProvider } from '../providers/Provider';
 import { AllTagContext } from '../providers/TagProvider';
-
+import { Link } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 export function ListItemLayout({ Icon, children }) {
     return (
         <Row>
@@ -99,10 +100,10 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                             {relevantOrgs != null &&
                                 relevantOrgs.map((org, index) =>
                                     <span>
-                                        {/* <Link style={{ color: 'var(--gray2)' }} target="_blank" to={`/org/${org.slug}`}>
+                                        <Link style={{ color: 'var(--gray2)' }} target="_blank" to={`/org/${org.slug}`}>
                                             <b data-tip={org.name}>{org.shortName}</b>
                                             <ReactTooltip backgroundColor="#FFD7BA" textColor="black" clickable={true} effect="solid" offset={{ top: 0 }} html={true} />
-                                        </Link> */}
+                                        </Link>
                                         {index !== relevantOrgs.length - 1 ? ', ' : ''}
                                     </span>
                                 )
